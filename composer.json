@@ -1,0 +1,19 @@
+{
+    "name": "saladin/gen",
+    "autoload": {
+        "psr-4": {
+            "Saladin\\": ["app/", "utility/", "config/"]
+        }
+    },
+    "authors": [
+        {
+            "name": "Saladin",
+            "email": "negaton.app@gmail.com"
+        }
+    ],
+    "require": {
+        "latte/latte": "^2.11",
+        "altorouter/altorouter": "^2.0",
+        "catfan/medoo": "^2.1"
+    }
+}

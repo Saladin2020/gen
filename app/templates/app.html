@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{$title}</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@next"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    {$parameter}
+    {syntax off}
+    <div id="app">
+        <br>
+        <select @change="loadTable($event)" v-model="seldb">
+            <option value="" disabled selected>Select you Databese</option>
+            <option v-for="db in databaselist" :value="db">{{db}}</option>
+        </select>
+        <hr>
+
+        <select @change="loadColumn($event)" v-model="seltable">
+            <option value="" disabled selected>Select you table</option>
+            <option v-for="col in tablelist" :value="col">{{col}}</option>
+        </select>
+        <hr>
+
+        <select @change="addColumn($event)" v-model="selcolumn">
+            <option value="" disabled selected>Select you column</option>
+            <option value="*">*</option>
+            <template v-for="col in columnlist">
+                <option v-if="!this.content.includes('*')" :value="col">{{col}}</option>
+                <option v-else disabled :value="col">{{col}}</option>
+            </template>
+        </select>
+        <hr>
+        <button type="button" @click="process()">Generate</button>
+        <br>
+        {{content.length}}
+        <hr>
+        SELECT
+        <div v-if="content.length">
+            <div v-for="(item, index) in content">
+                <button type="button" @click="removeColumn(item)">{{item}}</button>
+            </div>
+        </div>
+        <br>
+        FROM
+        <div v-if="seldb != ''">
+            <button type="button">{{seltable}}</button>
+        </div>
+        <hr>
+        {{queryString}} <button type="button" @click="run()">run</button>
+        <hr>
+        <template v-if="dataset != []">
+            <table>
+                <thead>
+                    <tr>
+                        <th v-for="(item, index) in dataset[0]" :key="index">{{index}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item1, index1) in dataset" :key="index1">
+                        <td v-for="(item2, index2) in item1" :key="index2">{{item2}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+    </div>
+    {/syntax}
+</body>
+<script src="app/templates/assets/js/app.js"></script>
+</html>
